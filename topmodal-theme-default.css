@@ -1,0 +1,78 @@
+@import 'https://fonts.googleapis.com/css?family=Montserrat:700|Open+Sans';
+
+body {
+    background: #efefef;
+    font-family: 'Open Sans', sans-serif;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    color: #333;
+}
+
+p {
+    margin: 0;
+    margin-bottom: 25px;
+}
+
+button {
+    outline: none;
+    cursor: pointer;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Page */
+
+.page {
+    padding: 50px 20px;
+    margin: auto;
+}
+
+.page__logo {
+    margin-bottom: 25px;
+    width: 55px;
+}
+
+.page__content {
+    margin-bottom: 20px;
+}
+
+.page__title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+}
+
+.page__title--colored {
+    color: #777;
+}
+
+/* Buttons */
+
+.page__btn {
+    background: #92e094;
+    border: none;
+    border-bottom: 1px solid #36bd39;
+    border-radius: 2px;
+    padding: 1em;
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.page__btn--cancel {
+    background: #ff5a5f;
+    border-color: #e00007;
+}
+
+/* TopModal */
+
+.topmodal {
+    border-radius: 2px;
+    text-align: center;
+}
