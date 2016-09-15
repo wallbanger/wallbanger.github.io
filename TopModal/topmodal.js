@@ -1,73 +1,101 @@
-(function($){
+;( function( $, window, document, undefined ) {
 
-  var methods = {
+    "use strict";
 
-      init: function() {
-          var self = $(this);
-    
-          $(document).on('click', methods.options.popupBtn, function() {
-              methods.show(self);
-              methods.showOverlay(self);
-          });
-    
-          $(document).on('click', methods.options.popupBtnClose, function() {
-              methods.hide(self);
-              methods.hideOverlay(self);
-          });
+    var pluginName = "topmodal",
+        defaults = {
+            topmodal: '.js-topmodal',
+            topmodalBtn: '.js-topmodal-btn',
+            topmodalBtnClose: '.js-topmodal-btn-close',
+            topmodalContainer: '.js-topmodal-container',
+            topmodalOverlay: '.js-topmodal-overlay'
+        };
 
-          $(document).on('click', methods.options.popupOverlay, function() {
-              methods.hide(self);
-              methods.hideOverlay(self);
-          });
-      },
+    function Plugin ( element, options ) {
+        this.element = element;
+        this.settings = $.extend( {}, defaults, options );
+        this._defaults = defaults;
+        this._name = pluginName;
+        this.init();
+    }
 
-      show: function(self) {
-          self.addClass('is-open');
-      },
+    $.extend( Plugin.prototype, {
+        init: function() {
+            var _obj = this.settings;
+            Plugin.prototype.handleOptions(_obj);
+        },
 
-      hide: function(self) {
-          self.removeClass('is-open');
-      },
-      
-      showOverlay: function(self) {
-          self.siblings(methods.options.popupOverlay).addClass('is-open');
-      },
+        show: function (_obj) {
+            $(_obj.topmodal).addClass('is-open');
+        },
 
-      hideOverlay: function(self) {
-          self.siblings(methods.options.popupOverlay).removeClass('is-open');
-      }
-  };
+        hide: function (_obj) {
+            $(_obj.topmodal).removeClass('is-open');
+        },
 
-  $.fn.topmodal = function(method) {
+        showContainer: function (_obj) {
+            $(_obj.topmodalContainer).addClass('is-open');
+        },
 
-      methods.options = $.extend({
-          popup: '.js-topmodal',
-          popupBtn: '.js-topmodal-btn',
-          popupBtnClose: '.js-topmodal-btn-close',
-          popupOverlay: '.js-topmodal-overlay'
-      }, method);
+        hideContainer: function (_obj) {
+            $(_obj.topmodalContainer).removeClass('is-open');
+        },
 
-      if (methods[method]) {
-          return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-      } else if (typeof method === 'object' || !method) {
-          return methods.init.apply(this, arguments);
-      } else {
-          $.error('TopModal has no such method: ' + method);
-      }
+        showOverlay: function (_obj) {
+            $(_obj.topmodalOverlay).addClass('is-open');
+        },
 
-      return this;
-  };
+        hideOverlay: function (_obj) {
+            $(_obj.topmodalOverlay).removeClass('is-open');
+        },
 
-})(jQuery);
+        handleOptions: function (_obj) {
+            $(document).on('click', _obj.topmodalBtn, function() {
+                Plugin.prototype.show(_obj);
+                Plugin.prototype.showContainer(_obj);
+                Plugin.prototype.showOverlay(_obj);
+            });
 
+            $(document).on('click', _obj.topmodalBtnClose, function() {
+                Plugin.prototype.hide(_obj);
+                Plugin.prototype.hideContainer(_obj);
+                Plugin.prototype.hideOverlay(_obj);
+            });
+
+            $(document).on('click', _obj.topmodalContainer, function() {
+                Plugin.prototype.hide(_obj);
+                Plugin.prototype.hideContainer(_obj);
+                Plugin.prototype.hideOverlay(_obj);
+            });
+
+            $(document).on('click', _obj.topmodal, function(event) {
+                event.stopPropagation();
+            });
+        }
+
+    });
+
+    $.fn[ pluginName ] = function( options ) {
+        return this.each( function() {
+            if ( !$.data( this, "plugin_" + pluginName ) ) {
+                $.data( this, "plugin_" +
+                    pluginName, new Plugin( this, options ) );
+            }
+        } );
+    };
+
+} )( jQuery, window, document );
 
 
 $('.js-topmodal--log').topmodal({
-    popupBtn: '.js-topmodal-btn--log'
+    topmodal: '.js-topmodal--log',
+    topmodalBtn: '.js-topmodal-btn--log',
+    topmodalBtnClose: '.js-topmodal-btn-closesss'
 });
 
 $('.js-topmodal--reg').topmodal({
-    popupBtn: '.js-topmodal-btn--reg'
+    topmodal: '.js-topmodal--reg',
+    topmodalBtn: '.js-topmodal-btn--reg'
 });
 
 $('.js-topmodal').topmodal();
